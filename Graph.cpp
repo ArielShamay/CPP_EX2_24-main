@@ -269,7 +269,7 @@ size_t Graph::getNumberOfNodes() const {
     return adjacencyMatrix.size();
 }
 
-int Graph::getEdgeCount() const {
+int ariel::Graph::getEdgeCount() const {
     int edgeCount = 0;
     for (const auto& row : adjacencyMatrix) {
         for (const auto& elem : row) {
