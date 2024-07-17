@@ -1,6 +1,5 @@
-// Ariel shamay
-// 207565573
-// arielsh49@gmail.com
+// Graph.hpp
+
 #ifndef GRAPH_HPP
 #define GRAPH_HPP
 
@@ -13,13 +12,14 @@ namespace ariel {
     class Graph {
     private:
         bool directed;
-        std::vector<std::vector<int>> adjacencyMatrix;
 
         // Private helper functions
         void checkSameSize(const Graph& other) const;
-        int getEdgeCount() const;
 
     public:
+        int getEdgeCount() const;
+        std::vector<std::vector<int>> adjacencyMatrix;
+        
         // Constructors
         Graph() = default;
         Graph(const std::vector<std::vector<int>>& matrix) { loadGraph(matrix); }
@@ -45,6 +45,12 @@ namespace ariel {
         Graph operator-(const Graph& other) const;
         Graph& operator-=(const Graph& other);
         Graph operator-() const;
+        Graph operator*(int scalar) const;
+        Graph& operator*=(int scalar); // הוספת הצהרת המפעיל *=
+        Graph& operator/=(int scalar); // הוספת הצהרת המפעיל /=
+
+        // Graph multiplication
+        Graph operator*(const Graph& other) const;
 
         // Comparison operators
         bool operator==(const Graph& other) const;
@@ -59,12 +65,6 @@ namespace ariel {
         Graph operator++(int);
         Graph& operator--();
         Graph operator--(int);
-
-        // Scalar multiplication
-        Graph operator*(int scalar) const;
-
-        // Graph multiplication
-        Graph operator*(const Graph& other) const;
 
         // Output operator
         friend std::ostream& operator<<(std::ostream& os, const Graph& graph);

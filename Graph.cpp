@@ -1,10 +1,7 @@
-// Ariel shamay
-// 207565573
-// arielsh49@gmail.com
+// Graph.cpp
+
 #include "Graph.hpp"
-#include <iostream>
 #include <stdexcept>
-#include <vector>
 #include <algorithm>
 
 using namespace ariel;
@@ -233,6 +230,29 @@ Graph Graph::operator*(int scalar) const {
     return Graph(result);
 }
 
+// Scalar multiplication assignment operator
+Graph& Graph::operator*=(int scalar) {
+    for (auto& row : adjacencyMatrix) {
+        for (auto& elem : row) {
+            elem *= scalar;
+        }
+    }
+    return *this;
+}
+
+// Scalar division assignment operator
+Graph& Graph::operator/=(int scalar) {
+    if (scalar == 0) {
+        throw std::invalid_argument("Division by zero is not allowed.");
+    }
+    for (auto& row : adjacencyMatrix) {
+        for (auto& elem : row) {
+            elem /= scalar;
+        }
+    }
+    return *this;
+}
+
 // Graph multiplication
 Graph Graph::operator*(const Graph& other) const {
     if (adjacencyMatrix.size() != other.adjacencyMatrix.size()) {
@@ -265,9 +285,9 @@ std::ostream& operator<<(std::ostream& os, const Graph& graph) {
 }
 
 // Private helper functions
-size_t Graph::getNumberOfNodes() const {
-    return adjacencyMatrix.size();
-}
+// size_t Graph::getNumberOfNodes() const {
+//     return adjacencyMatrix.size();
+// }
 
 int ariel::Graph::getEdgeCount() const {
     int edgeCount = 0;
