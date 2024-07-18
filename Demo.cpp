@@ -11,6 +11,7 @@ using ariel::Algorithms;
 #include <stdexcept>
 #include <vector>
 using namespace std;
+using namespace ariel;
 
 int main()
 {

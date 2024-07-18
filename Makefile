@@ -1,16 +1,22 @@
-CXX=clang
+#!make -f
+
+CXX=g++ -g -Wall 
 CXXFLAGS=-std=c++11 -Werror -Wsign-conversion
-VALGRIND_FLAGS=-v --leak-check=full --show-leak-kinds=all --error-exitcode=99
+VALGRIND_FLAGS=-v --leak-check=full --show-leak-kinds=all  --error-exitcode=99
 
-SOURCES=Graph.cpp Algorithms.cpp TestCounter.cpp Test.cpp Demo.cpp
-OBJECTS=$(SOURCES:.cpp=.o)
+SOURCES_DEMO=Graph.cpp Algorithms.cpp
+OBJECTS_DEMO=$(subst .cpp,.o,$(SOURCES_DEMO))
 
-all: demo test
+SOURCES_TEST=Graph.cpp Algorithms.cpp TestCounter.cpp Test.cpp
+OBJECTS_TEST=$(subst .cpp,.o,$(SOURCES_TEST))
 
-demo: Demo.o Graph.o Algorithms.o TestCounter.o
+run: demo
+	./$^
+
+demo: Demo.o $(OBJECTS_DEMO)
 	$(CXX) $(CXXFLAGS) $^ -o demo
 
-test: TestCounter.o Test.o Graph.o Algorithms.o
+test: TestCounter.o Test.o $(OBJECTS_TEST)
 	$(CXX) $(CXXFLAGS) $^ -o test
 
 tidy:
@@ -21,7 +27,7 @@ valgrind: demo test
 	valgrind --tool=memcheck $(VALGRIND_FLAGS) ./test 2>&1 | { egrep "lost| at " || true; }
 
 %.o: %.cpp
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+	$(CXX) $(CXXFLAGS) --compile $< -o $@
 
 clean:
 	rm -f *.o demo test

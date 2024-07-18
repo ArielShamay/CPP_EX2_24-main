@@ -269,19 +269,21 @@ Graph Graph::operator*(const Graph& other) const {
     }
     return Graph(result);
 }
-
-// Output operator
-std::ostream& operator<<(std::ostream& os, const Graph& graph) {
-    size_t vertexCount = graph.getNumberOfNodes();
-    int edgeCount = graph.getEdgeCount();
-    os << "Graph with " << vertexCount << " vertices and " << edgeCount << " edges.\n";
-    for (const auto& row : graph.adjacencyMatrix) {
-        for (const auto& elem : row) {
-            os << elem << ' ';
+namespace ariel
+{
+    // Output operator
+    std::ostream& operator<<(std::ostream& os, const Graph& graph) {
+        size_t vertexCount = graph.getNumberOfNodes();
+        int edgeCount = graph.getEdgeCount();
+        os << "Graph with " << vertexCount << " vertices and " << edgeCount << " edges.\n";
+        for (const auto& row : graph.adjacencyMatrix) {
+            for (const auto& elem : row) {
+                os << elem << ' ';
+            }
+            os << '\n';
         }
-        os << '\n';
+        return os;
     }
-    return os;
 }
 
 // Private helper functions
