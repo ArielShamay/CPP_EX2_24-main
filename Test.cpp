@@ -1,7 +1,8 @@
 #include "doctest.h"
 #include "Algorithms.hpp"
 #include "Graph.hpp"
-
+#include <iostream>
+#include <sstream>
 using namespace std;
 
 TEST_CASE("Test graph addition")
@@ -23,7 +24,11 @@ TEST_CASE("Test graph addition")
         {0, 2, 1},
         {2, 0, 3},
         {1, 3, 0}};
-    CHECK(g3.printGraph() == "[0, 2, 1]\n[2, 0, 3]\n[1, 3, 0]");
+    std::ostringstream output;
+    std::streambuf *OldCoutbuffer = std::cout.rdbuf(output.rdbuf());
+    g3.printGraph();
+    CHECK(output.str() == "[0, 2, 1]\n[2, 0, 3]\n[1, 3, 0]");
+    std::cout.rdbuf(OldCoutbuffer);
 }
 
 TEST_CASE("Test graph multiplication")
@@ -45,7 +50,11 @@ TEST_CASE("Test graph multiplication")
         {0, 0, 2},
         {1, 0, 1},
         {1, 0, 0}};
-    CHECK(g4.printGraph() == "[0, 0, 2]\n[1, 0, 1]\n[1, 0, 0]");
+        std::ostringstream output;
+        std::streambuf *OldCoutbuffer = std::cout.rdbuf(output.rdbuf());
+        g4.printGraph();
+        CHECK(output.str() == "[0, 0, 2]\n[1, 0, 1]\n[1, 0, 0]");
+        std::cout.rdbuf(OldCoutbuffer);
 }
 
 TEST_CASE("Invalid operations")
